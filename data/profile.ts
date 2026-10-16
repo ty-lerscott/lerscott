@@ -10,6 +10,7 @@ export interface LinkItem {
   href: string;
   description?: string;
   emoji?: string;
+  isExternal?: boolean;
 }
 
 export interface Profile {
@@ -34,10 +35,10 @@ export const profile: Profile = {
     { platform: "email", href: "mailto:ty@lerscott.com" },
   ],
   links: [
-    { title: "Personal website", href: "https://ty.lerscott.com", emoji: "🌐" },
-    { title: "Latest project", href: "#", description: "What I'm working on now", emoji: "🚀" },
-    { title: "Blog", href: "#", emoji: "✍️" },
-    { title: "Resume", href: "#", emoji: "📄" },
-    { title: "Book a call", href: "#", description: "30 min intro chat", emoji: "📅" },
+    { title: "Blog", href: "https://substack.com/@ty1erscott", emoji: "✍️" },
+    { title: "Personal Website", href: "https://ty.lerscott.com", emoji: "🌐" },
+    { title: "Latest project", href: "https://bsky.app/profile/ty-lerscott.bsky.social/post/3mfpde3h3tk2w", description: "What I'm working on now", emoji: "🚀" },
+    { title: "Resume", href: "./resume.pdf", emoji: "📄", isExternal: true },
+    { title: "Book a call", href: "https://calendly.com/ty-lerscott/15min", description: "15 min intro chat", emoji: "📅" },
   ],
 };

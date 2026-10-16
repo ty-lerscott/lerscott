@@ -11,8 +11,8 @@ function initials(name: string): string {
     .toUpperCase();
 }
 
-function isExternal(href: string): boolean {
-  return href.startsWith("http");
+function isExternal(obj: { href: string; isExternal?: boolean }): boolean {
+  return obj.href.startsWith("http") || !!obj.isExternal;
 }
 
 export default function Home() {
@@ -39,8 +39,8 @@ export default function Home() {
               key={social.platform}
               href={social.href}
               className={styles.social}
-              target={isExternal(social.href) ? "_blank" : undefined}
-              rel={isExternal(social.href) ? "noopener noreferrer" : undefined}
+              target={isExternal(social) ? "_blank" : undefined}
+              rel={isExternal(social) ? "noopener noreferrer" : undefined}
             >
               <SocialIcon platform={social.platform} />
             </a>
@@ -53,8 +53,8 @@ export default function Home() {
               <a
                 href={link.href}
                 className={styles.link}
-                target={isExternal(link.href) ? "_blank" : undefined}
-                rel={isExternal(link.href) ? "noopener noreferrer" : undefined}
+                target={isExternal(link) ? "_blank" : undefined}
+                rel={isExternal(link) ? "noopener noreferrer" : undefined}
               >
                 {link.emoji && (
                   <span className={styles.emoji} aria-hidden="true">
