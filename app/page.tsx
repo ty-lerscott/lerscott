@@ -1,6 +1,11 @@
+"use client";
+
 import { profile } from "@/data/profile";
 import { SocialIcon } from "@/components/SocialIcon";
+import posthog from "posthog-js";
 import styles from "./page.module.css";
+
+const profileInteractionLogger = posthog.logger;
 
 function initials(name: string): string {
   return name
@@ -41,6 +46,12 @@ export default function Home() {
               className={styles.social}
               target={isExternal(social) ? "_blank" : undefined}
               rel={isExternal(social) ? "noopener noreferrer" : undefined}
+              onClick={() => {
+                posthog.capture("link_clicked", { platform: social.platform });
+                profileInteractionLogger.info("social link selected", {
+                  platform: social.platform,
+                });
+              }}
             >
               <SocialIcon platform={social.platform} />
             </a>
@@ -48,13 +59,25 @@ export default function Home() {
         </nav>
 
         <ul className={styles.links}>
-          {profile.links.map((link) => (
+          {profile.links.map((link, index) => (
             <li key={link.title}>
               <a
                 href={link.href}
                 className={styles.link}
                 target={isExternal(link) ? "_blank" : undefined}
                 rel={isExternal(link) ? "noopener noreferrer" : undefined}
+                onClick={() => {
+                  const isExternalLink = isExternal(link);
+
+                  posthog.capture("link_clicked", {
+                    link_position: index + 1,
+                    is_external: isExternalLink,
+                  });
+                  profileInteractionLogger.info("link selected", {
+                    link_position: index + 1,
+                    is_external: isExternalLink,
+                  });
+                }}
               >
                 {link.emoji && (
                   <span className={styles.emoji} aria-hidden="true">
